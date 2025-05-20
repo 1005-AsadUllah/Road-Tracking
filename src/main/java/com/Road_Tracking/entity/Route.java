@@ -1,27 +1,24 @@
 package com.Road_Tracking.entity;
 
-
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Table("route")  // Map to your DB table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-    public class Route {
+public class Route {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id  // This marks the primary key
+    private Long id;
 
-        private String source;
-        private String destination;
-        private double distance; // in km
+    private String source;
+    private String destination;
+    private double distance; // in km
 
-
-
-    }
+}

@@ -3,10 +3,9 @@ package com.Road_Tracking.service;
 import com.Road_Tracking.entity.Route;
 import com.Road_Tracking.exception.NotFoundException;
 import com.Road_Tracking.repository.RouteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class RouteServiceimpl implements RouteService {
@@ -17,38 +16,29 @@ public class RouteServiceimpl implements RouteService {
         this.routeRepository = routeRepository;
     }
 
-
     @Override
-    public List<Route> findAll() {
+    public Flux<Route> findAll() {
         return routeRepository.findAll();
     }
 
     @Override
-    public Route save(Route route) {
+    public Mono<Route> save(Route route) {
         return routeRepository.save(route);
     }
 
-//    @Override
-//    public Route findById(Long id) {
-//        return routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Route not found with id: " ,"id"));
-//    }
     @Override
-    public Route findById(Long id) {
+    public Mono<Route> findById(Long id) {
         return routeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Route not found with id: " + id, "Route not found"));
+                .switchIfEmpty(Mono.error(
+                        new NotFoundException("Route Not Found With id: " + id, "ROUTE_NOT_FOUND")));
     }
 
-//    @Override
-//    public String deleteById(Long id) {
-//        Route route = routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Route not found with id: " , "id"));
-//        routeRepository.delete(route);
-//        return "Route deleted successfully by id: " + id;
-//    }
     @Override
-    public String deleteById(Long id) {
-        Route route = routeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Route not found with id: " + id, "Route not found"));
-        routeRepository.delete(route);
-        return "Route deleted successfully by id: " + id;
+    public Mono<String> deleteById(Long id) {
+        return routeRepository.findById(id)
+                .switchIfEmpty(Mono.error(
+                        new NotFoundException("Route Not Found With id: " + id, "ROUTE_NOT_FOUND")))
+                .flatMap(route -> routeRepository.delete(route)
+                        .thenReturn("✅ Route Deleted Successfully with id: " + id));
     }
 }

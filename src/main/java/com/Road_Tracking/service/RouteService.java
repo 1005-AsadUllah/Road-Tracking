@@ -1,16 +1,13 @@
 package com.Road_Tracking.service;
 
 import com.Road_Tracking.entity.Route;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface RouteService {
-
-    List<Route> findAll();
-
-    Route save(Route route);
-
-    Route findById(Long id);
-
-    String deleteById(Long id);
+    Flux<Route> findAll();
+    Mono<Route> save(Route route);
+    Mono<Route> findById(Long id);
+    Mono<String> deleteById(Long id);
 }
+
