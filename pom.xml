@@ -45,10 +45,11 @@
 		</dependency>
 
 		<!-- R2DBC MySQL Driver: Reactive driver for MySQL -->
+
 		<dependency>
-			<groupId>dev.miku</groupId>
+			<groupId>io.asyncer</groupId>
 			<artifactId>r2dbc-mysql</artifactId>
-			<version>0.8.2.RELEASE</version>
+			<version>1.4.0</version>
 		</dependency>
 
 
@@ -118,6 +119,13 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
+
+		<!-- R2DBC Connection Pool -->
+		<dependency>
+			<groupId>io.r2dbc</groupId>
+			<artifactId>r2dbc-pool</artifactId>
+		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -129,6 +137,8 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+
 		</dependencies>
 	</dependencyManagement>
 
