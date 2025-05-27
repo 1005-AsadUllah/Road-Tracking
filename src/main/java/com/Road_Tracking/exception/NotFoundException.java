@@ -1,8 +1,12 @@
 package com.Road_Tracking.exception;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+
 public class NotFoundException extends RuntimeException {
     private String errorMessage;
 
